@@ -5,7 +5,7 @@
 class IsometricGrid
 {
 public:
-    void Init(const glm::vec2& gridSize, const glm::vec2& tileSize);
+    void Init(const glm::vec2& gridSize, const glm::vec2& tileSize, const glm::vec2& origin);
     void PickCell(const glm::vec2& cursorPos);
     void Draw();
 private:
@@ -14,6 +14,7 @@ private:
     glm::vec2 pickedTile;
     glm::vec2 gridSize;
     glm::vec2 tileSize;
+    glm::vec2 origin;
     VertexBuffer fillBuffer;
     VertexBuffer lineBuffer;
 };

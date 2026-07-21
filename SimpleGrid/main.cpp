@@ -58,7 +58,7 @@ int main(int argc, char** argv)
         return -1;
     }
 
-    isometricGrid.Init({4,3}, {0.2f, 0.1f});
+    isometricGrid.Init({4,3}, {0.2f, 0.1f}, {});
 
     while (window.ShouldClose() == false) {
 

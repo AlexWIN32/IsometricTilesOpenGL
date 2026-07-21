@@ -4,12 +4,9 @@
 #include "consoleLog.h"
 #include <vector>
 
-static glm::vec2 gridToIsometric(const glm::vec2& coords, const glm::vec2& tileSize)
+static glm::vec2 gridToIsometric(const glm::vec2& coords, const glm::vec2& tileSize, const glm::vec2& start)
 {
-    float xStart = 0.0f;
-    float yStart = 0.0f;
-
-    return { xStart + (coords.x - coords.y) * tileSize.x * 0.5f, yStart + (coords.x + coords.y) * tileSize.y * 0.5f};
+    return { start.x + (coords.x - coords.y) * tileSize.x * 0.5f, start.y + (coords.x + coords.y) * tileSize.y * 0.5f};
 
     /*
     we can also express this transform in matrix form
@@ -30,14 +27,14 @@ static glm::vec2 gridToIsometric(const glm::vec2& coords, const glm::vec2& tileS
     glm::mat3x3 transform(
         tileSize.x * 0.5f,  tileSize.y * 0.5f, 0.0f,
         -tileSize.x * 0.5f, tileSize.y * 0.5f, 0.0f,
-        xStart,             yStart,            1.0f
+        start.x,             start.y,            1.0f
     );
 
     return transform * glm::vec3(coords, 1.0f);
     */
 }
 
-static glm::vec2 isometricToGrid(const glm::vec2& coords, const glm::vec2& tileSize)
+static glm::vec2 isometricToGrid(const glm::vec2& coords, const glm::vec2& tileSize, const glm::vec2& start)
 {
     /*
     https://chatgpt.com/share/6a5ea1cf-f7b8-83eb-be8a-d0b253f31a6f
@@ -76,12 +73,9 @@ static glm::vec2 isometricToGrid(const glm::vec2& coords, const glm::vec2& tileS
     y = (y_screen - y_start)/TILE_HEIGHT - (x_screen - x_start)/TILE_WIDTH
     */
 
-    float xStart = 0.0f;
-    float yStart = 0.0f;
-
     return {
-        (coords.x - xStart) / tileSize.x + (coords.y - yStart) / tileSize.y,
-        (coords.y - yStart) / tileSize.y - (coords.x - xStart) / tileSize.x
+        (coords.x - start.x) / tileSize.x + (coords.y - start.y) / tileSize.y,
+        (coords.y - start.y) / tileSize.y - (coords.x - start.x) / tileSize.x
     };
 
     /*
@@ -100,7 +94,7 @@ static glm::vec2 isometricToGrid(const glm::vec2& coords, const glm::vec2& tileS
 
 void IsometricGrid::PickCell(const glm::vec2& cursorPos)
 {
-    const auto isometricCoords = isometricToGrid(cursorPos, tileSize);
+    const auto isometricCoords = isometricToGrid(cursorPos, tileSize, origin);
 
     pickedTile.x = round(isometricCoords.x);
     pickedTile.y = round(isometricCoords.y);
@@ -119,10 +113,11 @@ void IsometricGrid::PickCell(const glm::vec2& cursorPos)
     UpdateVertices();
 }
 
-void IsometricGrid::Init(const glm::vec2& gridSize, const glm::vec2& tileSize)
+void IsometricGrid::Init(const glm::vec2& gridSize, const glm::vec2& tileSize, const glm::vec2& origin)
 {
     this->gridSize = gridSize;
     this->tileSize = tileSize;
+    this->origin = origin;
 
     fillBuffer.Init();
     lineBuffer.Init();
@@ -140,7 +135,7 @@ void IsometricGrid::UpdateVertices()
 
     for (int c = 0; c < gridSize.x; ++c) {
         for (int r = 0; r < gridSize.y; ++r) {
-            const auto cellCenter = gridToIsometric({ c, r }, tileSize);
+            const auto cellCenter = gridToIsometric({ c, r }, tileSize, origin);
             const auto north = cellCenter + glm::vec2(0.0f, tileSize.y * 0.5f);
             const auto south = cellCenter + glm::vec2(0.0f, -tileSize.y * 0.5f);
             const auto west = cellCenter + glm::vec2(-tileSize.x * 0.5f, 0.0f);
