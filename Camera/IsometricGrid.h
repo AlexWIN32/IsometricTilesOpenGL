@@ -1,5 +1,6 @@
 #pragma once
-#include "rendering/vertexBuffer.h"
+#include "ColoredVertex.h"
+#include <rendering/vertexBuffer.h>
 #include <glm/vec2.hpp>
 
 class IsometricGrid
@@ -15,6 +16,6 @@ private:
     glm::vec2 gridSize;
     glm::vec2 tileSize;
     glm::vec2 origin;
-    VertexBuffer fillBuffer;
-    VertexBuffer lineBuffer;
+    VertexBuffer<ColoredVertex> fillBuffer;
+    VertexBuffer<ColoredVertex> lineBuffer;
 };

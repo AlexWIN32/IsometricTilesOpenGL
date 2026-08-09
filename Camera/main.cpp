@@ -96,20 +96,6 @@ int main(int argc, char** argv)
         return -1;
     }
 
-    /**/
-    VertexBuffer fillBuffer;
-    fillBuffer.Init();
-
-    std::vector<VertexBuffer::Vertex> fillVertices;
-    fillVertices.push_back({{-0.5f, -0.5f}, {1.0f, 0.0f, 0.0f}});
-    fillVertices.push_back({{-0.5f, 0.5f}, {0.0f, 0.5f, 0.0f}});
-    fillVertices.push_back({{0.5f, 0.5f}, {0.0f, 0.0f, 0.5f}});
-    fillVertices.push_back({{0.5f, 0.5f}, {0.0f, 0.0f, 0.5f}});
-    fillVertices.push_back({{0.5f, -0.5f}, {0.0f, 0.5f, 0.5f}});
-    fillVertices.push_back({{-0.5f, -0.5f}, {1.0f, 0.0f, 0.0f}});
-
-    fillBuffer.Update(fillVertices);
-
     isometricGrid.Init({4,3}, {0.2f, 0.1f}, {});
     panAndZoomCamera.Init();
 
@@ -128,7 +114,6 @@ int main(int argc, char** argv)
         shader.Use();
         shader.SetUniform("transform", panAndZoomCamera.GetViewTransform());
         shader.SetUniform("aspect", aspect);
-        //fillBuffer.Draw(GL_TRIANGLES, 6);
         isometricGrid.Draw();
 
         window.ProcessEvents();

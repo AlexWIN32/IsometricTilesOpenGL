@@ -80,6 +80,17 @@ void Shader::SetUniform(const std::string &name, float value) const
     glUniform1f(pos, value);
 }
 
+void Shader::SetUniform(const std::string& name, const glm::mat3x3& value) const
+{
+    auto pos = glGetUniformLocation(shaderId, name.c_str());
+    glUniformMatrix3fv(pos, 1, GL_FALSE, &value[0][0]);
+}
+
+GLuint Shader::GetUniformLocation(const std::string& name) const
+{
+    return glGetUniformLocation(shaderId, name.c_str());
+}
+
 bool Shader::GetSuccessStatus(int shader, GLenum name)
 {
     int success;

@@ -1,7 +1,8 @@
 //based on https://pikuma.com/blog/isometric-projection-in-games
 
 #include "IsometricGrid.h"
-#include "consoleLog.h"
+#include "ColoredVertex.h"
+#include <consoleLog.h>
 #include <vector>
 
 static glm::vec2 gridToIsometric(const glm::vec2& coords, const glm::vec2& tileSize, const glm::vec2& start)
@@ -127,8 +128,8 @@ void IsometricGrid::Init(const glm::vec2& gridSize, const glm::vec2& tileSize, c
 
 void IsometricGrid::UpdateVertices()
 {
-    std::vector<VertexBuffer::Vertex> fillVertices;
-    std::vector<VertexBuffer::Vertex> lineVertices;
+    std::vector<ColoredVertex> fillVertices;
+    std::vector<ColoredVertex> lineVertices;
 
     const glm::vec3 htmlGreen = { 0.0f, 0.5f, 0.0f };
     const glm::vec3 yellow = { 1.0f, 1.0f, 0.0f };

@@ -18,6 +18,7 @@ public:
     void Use() const;
     void SetUniform(const std::string& name, float value) const;
     void SetUniform(const std::string& name, const glm::mat3x3& value) const;
+    GLuint GetUniformLocation(const std::string& name) const;
 private:
     bool GetSuccessStatus(int shader, GLenum name);
     GLuint shaderId;
