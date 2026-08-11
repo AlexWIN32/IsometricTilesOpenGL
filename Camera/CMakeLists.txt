@@ -1,5 +1,4 @@
 set(SOURCES
-	ColoredVertex.h
 	IsometricGrid.cpp
 	IsometricGrid.h
 	main.cpp

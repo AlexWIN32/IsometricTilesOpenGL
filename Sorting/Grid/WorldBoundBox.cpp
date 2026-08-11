@@ -1,7 +1,7 @@
 #include "WorldBoundBox.h"
 #include "Convertions.h"
 
-static void addLine(std::vector<LineVertex>& vertices, const std::vector<glm::vec2>& coords, int ind1, int ind2, const glm::vec3& color)
+static void addLine(std::vector<ColoredVertex>& vertices, const std::vector<glm::vec2>& coords, int ind1, int ind2, const glm::vec3& color)
 {
     vertices.push_back({coords[ind1], color});
     vertices.push_back({coords[ind2], color});
@@ -55,7 +55,7 @@ std::vector<glm::vec2> WorldBoundBox::GetIsometricSpaceCorners(const glm::vec2& 
     return boxVerticesI;
 }
 
-void WorldBoundBox::AddToDebugVertices(const glm::vec3& color, std::vector<LineVertex>& vertices, const glm::vec2& gridStart, const glm::vec2& tileSize) const
+void WorldBoundBox::AddToDebugVertices(const glm::vec3& color, std::vector<ColoredVertex>& vertices, const glm::vec2& gridStart, const glm::vec2& tileSize) const
 {
     const auto boxVerticesI = GetIsometricSpaceCorners(gridStart, tileSize);
 

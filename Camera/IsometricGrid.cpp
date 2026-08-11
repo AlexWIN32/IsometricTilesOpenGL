@@ -1,7 +1,7 @@
 //based on https://pikuma.com/blog/isometric-projection-in-games
 
 #include "IsometricGrid.h"
-#include "ColoredVertex.h"
+#include <Rendering/ColoredVertex.h>
 #include <consoleLog.h>
 #include <vector>
 

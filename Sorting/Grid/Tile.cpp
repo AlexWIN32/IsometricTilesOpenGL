@@ -18,7 +18,7 @@ void Tile::Init(Texture* texture, WorldBoundBox boundBoxW, const glm::vec2& grid
     const auto top = center.y - texSize.y * (1.0f - anchor.y);
     const auto bottom = center.y + texSize.y * anchor.y;
 
-    std::vector<TileVertex> tileVertices =
+    std::vector<TexturedVertex> tileVertices =
     {
         {{left, top}, {0.0f, 0.0f}},
         {{right, top}, {1.0f, 0.0f}},

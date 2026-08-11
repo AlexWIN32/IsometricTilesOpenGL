@@ -2,7 +2,7 @@
 #include <Grid/WorldBoundBox.h>
 #include <vector>
 
-static void addLine(std::vector<LineVertex>& vertices, const std::vector<glm::vec2>& coords, int ind1, int ind2, const glm::vec3& color)
+static void addLine(std::vector<ColoredVertex>& vertices, const std::vector<glm::vec2>& coords, int ind1, int ind2, const glm::vec3& color)
 {
     vertices.push_back({coords[ind1], color});
     vertices.push_back({coords[ind2], color});
@@ -14,7 +14,7 @@ bool ScreenRect::Overlaps(const ScreenRect& other) const
            && maxPos.y >= other.minPos.y && minPos.y <= other.maxPos.y;
 }
 
-void ScreenRect::AddToDebugVertices(const glm::vec3& color, std::vector<LineVertex>& vertices) const
+void ScreenRect::AddToDebugVertices(const glm::vec3& color, std::vector<ColoredVertex>& vertices) const
 {
     std::vector<glm::vec2> corners =
     {

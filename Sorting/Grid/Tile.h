@@ -2,7 +2,7 @@
 
 #include <Grid/ScreenRect.h>
 #include <Grid/WorldBoundBox.h>
-#include <Rendering/TileVertex.h>
+#include <Rendering/TexturedVertex.h>
 #include <Rendering/VertexBuffer.h>
 
 class Texture;
@@ -16,7 +16,7 @@ public:
     const WorldBoundBox& GetBoundBoxW() const;
     const ScreenRect& GetScreenRect() const;
 private:
-    VertexBuffer<TileVertex> vertexBuffer;
+    VertexBuffer<TexturedVertex> vertexBuffer;
     Texture* texture = nullptr;
     WorldBoundBox boundBoxW;
     ScreenRect screenRect;

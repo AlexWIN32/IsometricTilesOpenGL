@@ -9,9 +9,7 @@ set(SOURCES
 	Grid/Sorter.h
 	Grid/WorldBoundBox.cpp
 	Grid/WorldBoundBox.h
-	LineVertex.h
 	main.cpp
-	TileVertex.h
 )
 
 SETUP_GROUPS(SOURCES)

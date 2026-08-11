@@ -3,10 +3,12 @@ set(SOURCES
     glad/glad.c
     glad/glad.h
     KHR/khrplatform.h
+    Rendering/ColoredVertex.h
     Rendering/Shader.cpp
     Rendering/Shader.h
     Rendering/Texture.cpp
     Rendering/Texture.h
+    Rendering/TexturedVertex.h
     Rendering/VertexAttribute.h
     Rendering/VertexBuffer.h
     stb_image.cpp

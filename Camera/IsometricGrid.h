@@ -1,5 +1,5 @@
 #pragma once
-#include "ColoredVertex.h"
+#include "Rendering/ColoredVertex.h"
 #include <rendering/vertexBuffer.h>
 #include <glm/vec2.hpp>
 

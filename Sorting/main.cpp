@@ -8,10 +8,9 @@
 #include <Grid/Sorter.h>
 #include <Grid/Tile.h>
 #include <Grid/WorldBoundBox.h>
-#include <Rendering/LineVertex.h>
+#include <Rendering/ColoredVertex.h>
 #include <Rendering/Shader.h>
 #include <Rendering/Texture.h>
-#include <Rendering/TileVertex.h>
 #include <Rendering/VertexBuffer.h>
 #include "window.h"
 
@@ -31,7 +30,7 @@ Texture grassTileTexture;
 std::vector<Tile> grassTiles;
 std::vector<Tile> objectsTiles;
 
-std::vector<LineVertex> debugVertices;
+std::vector<ColoredVertex> debugVertices;
 
 bool showDebug = false;
 
@@ -166,7 +165,7 @@ int main(int argc, char** argv)
     grassTiles = Sorter::SortTiles(grassTiles);
     objectsTiles = Sorter::SortTiles(objectsTiles);
 
-    VertexBuffer<LineVertex> debugVertexBuffer;
+    VertexBuffer<ColoredVertex> debugVertexBuffer;
     debugVertexBuffer.Init();
     debugVertexBuffer.Update(debugVertices);
 
