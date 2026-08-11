@@ -1,7 +1,7 @@
 #pragma once
 #include <glm/vec2.hpp>
 #include <vector>
-#include "VertexAttribute.h"
+#include <Rendering/VertexAttribute.h>
 
 struct TileVertex
 {
