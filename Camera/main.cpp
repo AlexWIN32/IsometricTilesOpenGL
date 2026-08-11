@@ -25,25 +25,92 @@ glm::vec2 cursorV;
 bool processMotion = false;
 float scrollFactor = 0.0f;
 
+glm::vec2 squareCenter(0.7f, 0.5f);
+glm::vec2 squareHalfSize(0.25f, 0.25f);
+
+static void ProcessMouseMove(float x, float y)
+{
+    LOG_INFO("cursor screen %f %f", x, y);
+
+    /*
+    we have cursor coords in cursor space
+
+        ---------------->
+        |0            |
+        |             |
+        |             |
+        |_____________|
+        |             W,H
+        \|/
+
+    isometric space is unit square centered in screen
+
+           |
+         --+------------->
+        |  |0      |  |
+        |  |       |  |
+        |  |       |  |
+        |__|_______|__|
+           |       1,1
+          \|/
+
+    we need to convert cusror space to isometric space
+    first we need to normalize cursor coords
+
+        Nx = x / windowWidth
+        Ny = y / windowHeight
+
+    then we need to convert normalized cursor coords to aspect space
+    where x in [-A, A] and y in [-1, 1], A is W/H
+
+               /|\
+         _______|_______
+        |A,1    |       |
+        |       |       |
+        --------+--------->
+        |       |       |
+        |_______|_______|
+                |      -A,-1
+
+        Ax = (Nx * 2 - 1) * A;
+        Ay = (1 - Ny) * 2 - 1;
+
+    then we need to convert aspect space to isometric space
+
+        Ix = (Ax + 1) / 2
+        Iy = 1 - (Ay + 1) / 2
+
+    if we plug Ax and Ay into Ix and Iy we get
+
+        Ix = ((Nx * 2 - 1) * A + 1) / 2
+        Ix = (Nx*2*A - A + 1) / 2
+        Ix = Nx*A - A/2 + 1/2
+
+        Ix = 1 - (((1 - Ny) * 2 - 1) + 1) / 2
+        Ix = 1 - ((2 - Ny*2 - 1) + 1) / 2
+        Ix = 1 - (1 - Ny*2 + 1) / 2
+        Ix = 1 - (2 - Ny*2) / 2
+        Ix = 1 - (1 - Ny)
+        Ix = 1 - 1 + Ny
+        Ix = Ny
+    */
+
+    glm::vec2 cursorS(x / windowWidth, y / windowHeight);
+
+    cursorV.x = cursorS.x * aspect - aspect * 0.5f + 0.5f;
+    cursorV.y = cursorS.y;
+
+    LOG_INFO("cursor world %f %f", cursorV.x, cursorV.y);
+    auto cursorWorld = panAndZoomCamera.GetWorldTransform() * glm::vec3(cursorV, 1.0f);
+
+    isometricGrid.PickCell(cursorWorld);
+}
+
 void CreateWindow()
 {
     window.Init(windowWidth, windowHeight, "pan and zoom camera with isometric grid");
 
-    window.AddMouseMoveHandler(
-        [](float x, float y)
-        {
-            LOG_INFO("cursor screen %f %f", x, y);
-
-            cursorV.x = ((x / windowWidth) * 2.0f - 1.0f) * aspect;
-            cursorV.y = -y / windowHeight * 2.0f + 1.0f;
-
-            auto cursorWorld = panAndZoomCamera.GetWorldTransform() * glm::vec3(cursorV, 1.0f);
-
-            LOG_INFO("cursor cartesian %f %f", cursorV.x, cursorV.y);
-
-            isometricGrid.PickCell(cursorWorld);
-        }
-    );
+    window.AddMouseMoveHandler(ProcessMouseMove);
 
     window.AddMouseClickHandler(
         [](int button, int action)
@@ -96,7 +163,7 @@ int main(int argc, char** argv)
         return -1;
     }
 
-    isometricGrid.Init({4,3}, {0.2f, 0.1f}, {});
+    isometricGrid.Init({4,3}, {0.2f, 0.1f}, {0.5f, 0.5f});
     panAndZoomCamera.Init();
 
     while (window.ShouldClose() == false) {
