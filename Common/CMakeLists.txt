@@ -1,5 +1,7 @@
 set(SOURCES
     consoleLog.h
+    Convertions.cpp
+    Convertions.h
     glad/glad.c
     glad/glad.h
     KHR/khrplatform.h

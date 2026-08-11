@@ -1,6 +1,4 @@
 set(SOURCES
-	Grid/Convertions.cpp
-	Grid/Convertions.h
 	Grid/ScreenRect.cpp
 	Grid/ScreenRect.h
 	Grid/Tile.cpp
